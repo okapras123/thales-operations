@@ -1,0 +1,22 @@
+# File yang dihasilkan oleh build
+/dist
+/build
+/out
+/__pycache__
+
+# File cache
+/.cache
+/.pytest_cache
+/.tox
+/.eggs
+/.env
+
+# File konfigurasi
+/.env
+/.env.local
+/.env.*.local
+.env.*
+.env.*
+
+# File log
+/.log
