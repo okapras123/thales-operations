@@ -10,6 +10,7 @@
 /.tox
 /.eggs
 /.env
+/resources
 
 # File konfigurasi
 /.env
