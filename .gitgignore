@@ -21,4 +21,4 @@
 .env.*
 
 # File log
-/log
+/log/
