@@ -76,17 +76,13 @@ venv.bak/
 ENV/
 env/
 .venv/
-venv/
 __pycache__/
-
-# VS Code
-.vscode/
-.vscode-test/
+**/__pycache__/
 
 # IDEs
+.vscode/
 .idea/
-*.sublime-project
-*.sublime-workspace
+*.sublime-*
 
 # macOS
 .DS_Store
