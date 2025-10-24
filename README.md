@@ -23,7 +23,7 @@ Designed for:
 ---
 
 ## 🧩 Project Structure
-
+```bash
 operations/
 │
 ├── src/
@@ -44,9 +44,7 @@ operations/
 ├── requirements.txt
 ├── main.py # Entry point
 └── README.md
-
-yaml
-Salin kode
+```
 
 ---
 
@@ -58,40 +56,43 @@ Salin kode
 git clone https://github.com/<your-org>/<repo-name>.git
 cd <repo-name>
 2️⃣ Create and Activate Virtual Environment
-bash
-Salin kode
+```
+```python
 python -m venv .venv
 source .venv/bin/activate      # macOS/Linux
 # or
 .venv\Scripts\activate         # Windows
+```
+```python
 3️⃣ Install Dependencies
-bash
-Salin kode
+
 pip install -r requirements.txt
+```
+
 4️⃣ Prepare Configurations
+
 a. Create the Configs folder
-bash
-Salin kode
+```bash
 mkdir Configs
 cp sample_configs.xlsx Configs/
 b. Copy the environment file
-bash
-Salin kode
+
 cp env.sample .env
+```
+
 Then open .env and adjust to match your CipherTrust Manager settings.
 
 🧠 Environment Variables (.env)
 Example .env file:
 
-ini
-Salin kode
+```bash
 # CipherTrust Manager Settings
-CTM_HOST=https://192.168.100.79
+CTM_HOST=https://XXX.XXX.XXX.XXX
 CTM_ADMIN_USER=admin
 CTM_ADMIN_PASS=yourpassword
 
 # CipherTrust VaultLink (optional)
-CTVL_HOST=https://192.168.100.80
+CTVL_HOST=https://XXX.XXX.XXX.XXX
 CTVL_ADMIN_USER=admin
 CTVL_ADMIN_PASS=yourpassword
 
@@ -100,11 +101,12 @@ LOG_FILE=log/provision.log
 VERIFY_SSL=False
 TIMEOUT_SECONDS=30
 DEFAULT_EMAIL_DOMAIN=example.local
+```
+
 ▶️ Run the Provisioning
+
 After setup, simply run:
 
-bash
-Salin kode
 python main.py
 The tool will automatically:
 
@@ -117,11 +119,13 @@ Create CTE Keys, Client Profiles, and Registration Tokens
 Log all actions to console and file (log/provision.log)
 
 📜 Example Log Output
-yaml
-Salin kode
+```yaml
+2025-10-24 15:10:29,876 INFO src.ops.cte.cte_provisioner - [CTE] Starting CTE Provisioning process
 2025-10-24 15:10:31,421 INFO src.ops.cte.cte_provisioner - [CTE] Created CTE key: ldt_myapp_keys
 2025-10-24 15:10:31,670 INFO src.ops.cte.cte_provisioner - [CTE] Created registration token for myapp | token: ZZZZZZ
 2025-10-24 15:10:33,109 INFO src.ops.cte.cte_provisioner - ✅ Successfully provisioned CTE client: myapp
+```
+
 📊 Excel Configuration Format
 The Excel file defines the list of applications/clients to be provisioned.
 Example columns:
