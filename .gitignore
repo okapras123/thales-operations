@@ -10,6 +10,7 @@
 
 config/
 Configs/
+Configs
 # Distribution / packaging
 .Python
 build/
