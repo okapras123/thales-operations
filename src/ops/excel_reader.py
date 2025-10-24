@@ -1,6 +1,6 @@
 # src/ops/excel_reader.py
 import pandas as pd
-from typing import Dict, Any
+from typing import Dict, Any, List
 
 class ExcelReader:
     def __init__(self, path: str):
@@ -51,3 +51,28 @@ class ExcelReader:
         """
         df = pd.read_excel(self.path, sheet_name="workshops_api", engine="openpyxl")
         return df.fillna("")
+
+    def read_cte_provisioning(self) -> List[Dict[str, Any]]:
+        """
+        Reads 'cte_provisioning' sheet for CTE automation.
+        Expected columns:
+        client name | current keys | max allowed | authorized_users | authorized process
+        """
+        df = pd.read_excel(self.path, sheet_name="cte_provisioning", engine="openpyxl")
+        df = df.fillna("")
+
+        results = []
+        for _, row in df.iterrows():
+            cname = str(row.get("client name", "")).strip()
+            if not cname:
+                continue
+
+            results.append({
+                "client_name": cname,
+                "current_keys": str(row.get("current keys", "")).strip(),
+                "max_allowed": int(row.get("max allowed", 0)),
+                "authorized_users": [u.strip() for u in str(row.get("authorized_users", "")).split(",") if u.strip()],
+                "authorized_process": [p.strip() for p in str(row.get("authorized process", "")).split(",") if p.strip()]
+            })
+
+        return results

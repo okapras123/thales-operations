@@ -17,6 +17,7 @@ class AppConfig:
     log_file: str
     default_email_domain: str
     timeout_seconds: int
+    cte_owner_id: str
 
 def get_config() -> AppConfig:
     ctm_host = os.getenv("CTM_HOST", "https://127.0.0.1")
@@ -30,6 +31,7 @@ def get_config() -> AppConfig:
     ctvl_host = os.getenv("CTVL_HOST", "https://127.0.0.1")
     ctvl_admin_user = os.getenv("CTVL_ADMIN_USER", "admin")
     ctvl_admin_pass = os.getenv("CTVL_ADMIN_PASS", "password")
+    cte_owner_id = os.getenv("CTE_OWNER_ID", "local|15feac1d-af25-42e5-893f-854989884d5e")
 
     return AppConfig(
         ctm_host=ctm_host.rstrip("/"),
@@ -41,5 +43,6 @@ def get_config() -> AppConfig:
         verify_ssl=verify_ssl,
         log_file=log_file,
         default_email_domain=default_email_domain,
-        timeout_seconds=timeout_seconds
+        timeout_seconds=timeout_seconds,
+        cte_owner_id=cte_owner_id
     )

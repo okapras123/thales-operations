@@ -1,6 +1,7 @@
 # src/ops/provisioner.py
 import logging
 from .ctm_client import CTMClient
+from .cte.cte_provisioner import CTEProvisioner 
 from .excel_reader import ExcelReader
 from .config import AppConfig, get_config
 from .ctvl_client import CTVLClient
@@ -88,15 +89,46 @@ class Provisioner:
             })
 
         return templates
-
+    
+    def _run_cte_provisioning(self):
+        """Delegates CTE provisioning to CTEProvisioner class."""
+        logger.info("Starting CTE Provisioning process...")
+        try:
+            cte = CTEProvisioner(self.cfg, self.excel)
+            cte.run()
+            logger.info("CTE Provisioning completed successfully.")
+        except Exception as e:
+            logger.exception("CTE Provisioning failed: %s", e)
 
     def run(self):
         settings = self.excel.read_settings()
-        workshops = settings.get("Workshops API", {}).get("status", False)
-        if not workshops:
-            logger.info("Workshops API disabled in settings. Nothing to do.")
-            return
+        # logger.info("Settings loaded: %s", settings)
 
+        for task_name, task_cfg in settings.items():
+            if not task_cfg.get("status"):
+                logger.info("%s disabled in settings. Skipping...", task_name)
+                continue
+
+            logger.info("Running task: %s", task_name)
+
+            if task_name == "Workshops API":
+                self._run_workshops_api()
+            elif task_name == "CTE Provisioning":
+                self._run_cte_provisioning()
+            elif task_name == "CTE Registration":
+                self._run_cte_registration()
+            elif task_name == "Transform Database":
+                self._run_tf_db_to_db()
+            elif task_name == "Transform File to File":
+                self._run_tf_file_to_file()
+            else:
+                logger.warning("Unknown or unsupported task: %s", task_name)
+
+        logger.info("=== All provisioning completed ===")
+
+
+
+    def _run_workshops_api(self):
         df_workshops = self.excel.read_workshops_api()
         # authenticate once (with retry)
         # Auth ke CTM

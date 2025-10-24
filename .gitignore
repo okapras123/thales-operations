@@ -9,6 +9,7 @@
 *.so
 
 config/
+Configs/
 # Distribution / packaging
 .Python
 build/
