@@ -1,28 +1,159 @@
-markdown
-# Proyek Python
+# 🛡️ Thales CipherTrust Data Security Automation Toolkit
 
-Proyek ini adalah contoh sederhana untuk proyek Python.
+An automation toolkit for **Thales CipherTrust Data Security Platform**  
+Built with ❤️ in Python to simplify and standardize the setup of **CipherTrust modules** — including:
 
-## Instalasi
+- 🔐 CipherTrust Transparent Encryption (CTE)
+- 🧩 VaultLink (CTVL)
+- 🧰 Workshop API provisioning
+- ⚙️ Key, Profile, and Token management
 
-1. Pastikan Anda telah menginstal Python versi 3.x di komputer Anda.
-2. Buka terminal atau command prompt.
-3. Jalankan perintah berikut untuk menginstal dependencies proyek:
+---
 
-   ```shell
-   pip install -r requirements.txt
-Jalankan perintah berikut untuk menjalankan proyek:
-shell
+## 🚀 Overview
+
+This toolkit automates the provisioning and configuration workflows for Thales CipherTrust products.  
+It can automatically create **encryption keys**, **client profiles**, and **registration tokens**, all driven by configuration files (Excel + `.env`).
+
+Designed for:
+- Rapid environment setup  
+- Consistent provisioning  
+- Large-scale enterprise integration  
+
+---
+
+## 🧩 Project Structure
+
+operations/
+│
+├── src/
+│ ├── ops/
+│ │ ├── cte/
+│ │ │ └── cte_provisioner.py
+│ │ ├── excel_reader.py
+│ │ ├── provisioner.py
+│ │ ├── config.py
+│ │ └── ctm_client.py
+│ └── ...
+│
+├── Configs/
+│ └── sample_configs.xlsx # Example Excel configuration
+│
+├── .env # Environment variables file
+├── env.sample # Sample env template
+├── requirements.txt
+├── main.py # Entry point
+└── README.md
+
+yaml
+Salin kode
+
+---
+
+## ⚙️ Setup & Deployment
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/<your-org>/<repo-name>.git
+cd <repo-name>
+2️⃣ Create and Activate Virtual Environment
+bash
+Salin kode
+python -m venv .venv
+source .venv/bin/activate      # macOS/Linux
+# or
+.venv\Scripts\activate         # Windows
+3️⃣ Install Dependencies
+bash
+Salin kode
+pip install -r requirements.txt
+4️⃣ Prepare Configurations
+a. Create the Configs folder
+bash
+Salin kode
+mkdir Configs
+cp sample_configs.xlsx Configs/
+b. Copy the environment file
+bash
+Salin kode
+cp env.sample .env
+Then open .env and adjust to match your CipherTrust Manager settings.
+
+🧠 Environment Variables (.env)
+Example .env file:
+
+ini
+Salin kode
+# CipherTrust Manager Settings
+CTM_HOST=https://192.168.100.79
+CTM_ADMIN_USER=admin
+CTM_ADMIN_PASS=yourpassword
+
+# CipherTrust VaultLink (optional)
+CTVL_HOST=https://192.168.100.80
+CTVL_ADMIN_USER=admin
+CTVL_ADMIN_PASS=yourpassword
+
+# Logging and Behavior
+LOG_FILE=log/provision.log
+VERIFY_SSL=False
+TIMEOUT_SECONDS=30
+DEFAULT_EMAIL_DOMAIN=example.local
+▶️ Run the Provisioning
+After setup, simply run:
+
+bash
+Salin kode
 python main.py
-Penggunaan
-Setelah menjalankan proyek, Anda dapat mengakses aplikasi di http://localhost:5000.
+The tool will automatically:
 
-Kontribusi
-Anda dapat berkontribusi pada proyek ini dengan menambahkan fitur baru atau memperbaiki bug. Berikut adalah langkah-langkah untuk berkontribusi:
+Authenticate to CipherTrust Manager (CTM)
 
-Buat fork dari proyek ini.
-Buat branch baru untuk fitur atau perubahan yang ingin Anda lakukan.
-Lakukan perubahan yang diperlukan.
-Buat pull request ke proyek asli.
-Lisensi
-Proyek ini dilisensikan di bawah MIT License.
+Read client data from Excel
+
+Create CTE Keys, Client Profiles, and Registration Tokens
+
+Log all actions to console and file (log/provision.log)
+
+📜 Example Log Output
+yaml
+Salin kode
+2025-10-24 15:10:31,421 INFO src.ops.cte.cte_provisioner - [CTE] Created CTE key: ldt_myapp_keys
+2025-10-24 15:10:31,670 INFO src.ops.cte.cte_provisioner - [CTE] Created registration token for myapp | token: ZZZZZZ
+2025-10-24 15:10:33,109 INFO src.ops.cte.cte_provisioner - ✅ Successfully provisioned CTE client: myapp
+📊 Excel Configuration Format
+The Excel file defines the list of applications/clients to be provisioned.
+Example columns:
+
+Application Name	Max Allowed	Description
+mytesla	5	Tesla CTE Client
+mybank	10	Bank Data Encryption Client
+
+The tool will automatically use the following naming conventions:
+
+Key Name: ldt_<app_name>_keys
+
+Profile Name: <app_name>_client
+
+Alias: <app_name>_client
+
+🧰 Development Notes
+UTF-8 safe logging (no emoji crash on Windows)
+
+.env controls SSL and timeout behavior
+
+Easy to extend for other CipherTrust modules (CTVL, DSM, etc.)
+
+Each provisioning step fully logged for traceability
+
+👨‍💻 Author & Credits
+Developed by NERA Engineering Team
+Project: Telkom Data Protection – Thales CipherTrust Automation
+Maintained by: Oka Prasetiyo
+
+Made with ❤️ for better, faster, and safer data security integration.
+
+📄 License
+This project is proprietary and confidential.
+Unauthorized copying, modification, or redistribution is strictly prohibited.

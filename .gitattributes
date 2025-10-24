@@ -1,0 +1,8 @@
+# Enforce UTF-8 encoding
+* text=auto eol=lf
+*.py text eol=lf
+*.md text working-tree-encoding=UTF-8
+*.txt text working-tree-encoding=UTF-8
+*.env text working-tree-encoding=UTF-8
+*.xlsx binary
+*.csv text working-tree-encoding=UTF-8
